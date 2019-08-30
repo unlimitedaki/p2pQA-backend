@@ -31,8 +31,15 @@ urlpatterns = [
     path('api/questions',broadcast.questions),
     path('api/answers',broadcast.answers),
     path('api/querylist',broadcast.querylist),
-    path('api/queryamount',broadcast.queryAmount),
+    # path('api/queryamount',broadcast.queryAmount),
+    # path('api/answeramount',broadcast.answerAmount),
     path('api/accept',broadcast.acceptAnswer),
     path('api/reject',broadcast.reject),
-    path('api/checkpoint',adminOP.checkPoint)
+    path('api/follow',broadcast.follow),
+    path('api/answerrecord',broadcast.answerRecord),
+    path('api/correct',broadcast.correct),
+    path('api/statistics',broadcast.statistics),
+    # admin operations 其实并没有admin
+    path('api/checkpoint',adminOP.checkPoint),
+    path('api/backup',adminOP.backup),
 ]

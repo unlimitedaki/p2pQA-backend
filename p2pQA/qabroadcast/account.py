@@ -29,6 +29,9 @@ def register(request):# request是前端发送的请求，包含请求类型(req
             elif nickname and password and email:
                 new_user = models.User(email = email,nickname = nickname,password = password)# 新建数据对象，直接在初始化时保存数据
                 new_user.accuracy = 0.0# 
+                new_user.balance = 0
+                new_user.score = 0
+                new_user.rank = 0
                 response.set_cookie('email',email)# 设置cookie
                 token = hashlib.sha1(os.urandom(24)).hexdigest()
                 new_user.token = token

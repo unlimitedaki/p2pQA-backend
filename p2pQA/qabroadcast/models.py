@@ -6,7 +6,8 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+import time
+import datetime
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -122,7 +123,10 @@ class User(models.Model):
     nickname = models.CharField(max_length = 128)
     password = models.CharField(max_length = 128)
     token = models.CharField(max_length = 128)
-    accuracy = models.DecimalField(max_digits=20, decimal_places=19)
+    accuracy = models.DecimalField(max_digits=20, decimal_places=19)#用户回答问题的采纳率
+    balance = models.IntegerField(default = 0)#用户积分账户，用于兑换奖励
+    score = models.IntegerField(default = 0)#用户的总积分，用于计算用户星级
+    rank = models.IntegerField(default = 0)#用户的星级
 
     class Meta:
         db_table = 'user'
@@ -131,6 +135,7 @@ class Question(models.Model):
     questionid = models.AutoField(primary_key = True)
     text = models.TextField()
     uploadtime = models.DateTimeField()
+    lastestanswertime = models.DateTimeField()
     status = models.IntegerField()
     user = models.CharField(max_length = 128,default= "")
     class Meta:
@@ -142,6 +147,16 @@ class Answer(models.Model):
     text = models.TextField()
     uploadtime = models.DateTimeField()
     status = models.IntegerField()
+    follow = models.IntegerField()
     user = models.CharField(max_length = 128,default= "")
     class Meta:
         db_table = 'answer'
+
+class Follow(models.Model):
+    questionid = models.IntegerField()
+    answerid = models.IntegerField()
+    followid = models.AutoField(primary_key = True)
+    answeruser = models.CharField(max_length = 128,default = "")
+    follower = models.CharField(max_length = 128,default = "")
+    class Meta:
+        db_table = 'follow'
